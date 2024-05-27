@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml;
+using System.Threading;
 
 namespace Practice6_GameOfLife
 {
@@ -16,6 +17,7 @@ namespace Practice6_GameOfLife
         private readonly double cell_size;
 
         private readonly GameOfLifeEngine engine;
+        private Thread simulationThread; 
 
         private readonly StackPanel field;
 
@@ -35,6 +37,7 @@ namespace Practice6_GameOfLife
 
             engine = new GameOfLifeEngine((int)(height / cell_size),
                 (int)(width / cell_size),
+                1000,
                 new StandardLifeAndSurvivalRules(),
                 new StandardNeighborsCountingRules());
 
@@ -73,9 +76,27 @@ namespace Practice6_GameOfLife
             }
         }
 
-        public void PlaySimulation()
+        public void PlayOrStopSimulation()
         {
+            if (engine.IsSimulationRun)
+            {
+                engine.IsSimulationRun = false;
+            }
+            else
+            {
+                simulationThread = new Thread(RunSimulationForward);
+            }
+        }
 
+        private void RunSimulationForward()
+        {
+            engine.IsSimulationRun = true;
+            while (engine.IsSimulationRun)
+            {
+                engine.MakeStepForward();
+                MapFieldToScreenField();
+                Thread.Sleep(engine.TimeBetweenSteps);
+            }
         }
 
         public void MakeStepForward()

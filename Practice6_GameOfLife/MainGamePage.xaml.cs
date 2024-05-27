@@ -65,7 +65,7 @@ namespace Practice6_GameOfLife
 
         private void PlaySimulationButtonClick(object sender, RoutedEventArgs e)
         {
-            mainController.PlaySimulation();
+            mainController.PlayOrStopSimulation();
         }
 
         private void MakeStepButtonClick(object sender, RoutedEventArgs e)

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Practice6_GameOfLife
@@ -11,20 +12,25 @@ namespace Practice6_GameOfLife
         private readonly int FIELD_WIDTH;
         private readonly int FIELD_HEIGHT;
 
+        private int timeBetweenSteps;
+        private bool isSimulationRun;
+
         private readonly ILifeAndSurvivalRules lifeAndSurvivalRules;
         private readonly INeighborsCountingRules neighborsCountingRules;
 
         private bool[][] currentStep;
         private bool[][] nextStep;
-        
 
-        public GameOfLifeEngine(int FIELD_HEIGHT, int FIELD_WIDTH,
+
+        public GameOfLifeEngine(int FIELD_HEIGHT, int FIELD_WIDTH, int timeBetweenSteps,
             ILifeAndSurvivalRules lifeAndSurvivalRules,
             INeighborsCountingRules neighborsCountingRules)
         {
             this.FIELD_HEIGHT = FIELD_HEIGHT;
             this.FIELD_WIDTH = FIELD_WIDTH;
-            
+
+            this.timeBetweenSteps = timeBetweenSteps;
+
 
             this.lifeAndSurvivalRules = lifeAndSurvivalRules;
             this.neighborsCountingRules = neighborsCountingRules;
@@ -35,7 +41,7 @@ namespace Practice6_GameOfLife
             {
                 currentStep[i] = new bool[FIELD_WIDTH];
                 nextStep[i] = new bool[FIELD_WIDTH];
-                for (int j = 0; j  < FIELD_WIDTH; j++)
+                for (int j = 0; j < FIELD_WIDTH; j++)
                 {
                     currentStep[i][j] = false;
                     nextStep[i][j] = false;
@@ -57,7 +63,26 @@ namespace Practice6_GameOfLife
                 return currentStep;
             }
         }
-        
+
+        public bool IsSimulationRun
+        {
+            get
+            {
+                return isSimulationRun;
+            }
+            set
+            {
+                isSimulationRun = value;
+            }
+        }
+
+        public int TimeBetweenSteps
+        {
+            get
+            {
+                return timeBetweenSteps;
+            }
+        }        
 
         public void MakeStepForward()
         {
