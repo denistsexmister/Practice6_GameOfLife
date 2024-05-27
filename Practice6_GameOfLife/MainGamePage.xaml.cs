@@ -25,7 +25,7 @@ namespace Practice6_GameOfLife
         private readonly double width;
         private readonly double height;
         private readonly double cell_width;
-        private readonly double cell_height;
+        private readonly double cell_height;//hello
 
         private Engine engine;
 
