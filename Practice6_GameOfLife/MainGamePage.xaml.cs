@@ -25,87 +25,47 @@ namespace Practice6_GameOfLife
         private readonly double width;
         private readonly double height;
         private readonly double cell_width;
-        private readonly double cell_height;//hello
+        private readonly double cell_height;
 
-        private Engine engine;
+        private readonly MainController mainController;
+
+        private readonly StackPanel gameField = new StackPanel()
+        {
+            Orientation = Orientation.Vertical,
+            Margin = new Thickness(0, 10, 0, 10)
+        };
+        private readonly StackPanel buttonsField = new StackPanel()
+        {
+            Orientation = Orientation.Vertical,
+            Margin = new Thickness(0, 10, 0, 10)
+        };
 
         public MainGamePage()
         {
             this.InitializeComponent();
 
-            width = 800;
-            height = 320;
-            cell_width = 16;
-            cell_height = 16;
+            mainController = new MainController(800, 320, 16);
 
-            engine = new Engine(1, (int)(height / cell_height),
-                (int)(width / cell_width),
-                new StandardLifeAndSurvivalRules(),
-                new StandardNeighborsCountingRules());
+            gameField.Children.Add(mainController.Field);
 
-
-            List<Button> buttons = new List<Button>();
-
-            
-            for (int i = 0; i < (height / cell_height); i++)
+            Button makeStepButton = new Button()
             {
-                StackPanel stackPanel = new StackPanel()
-                {
-                    Name = i.ToString(),
-                    Orientation = Orientation.Horizontal
-                };
+                Name = "makeStepButton",
+                Content = "Make Step"
+            };
+            makeStepButton.Click += MakeStepButtonClick;
+            buttonsField.Children.Add(makeStepButton);
 
-                for (int j = 0; j < (width / cell_width); j++)
-                {
-                    SolidColorBrush backgroundColor = new SolidColorBrush();
-                    
-                    backgroundColor.Color = (engine.Field[i][j]) ?
-                        Windows.UI.Color.FromArgb(255, 0, 0, 0) :
-                        Windows.UI.Color.FromArgb(255, 255, 255, 255);
 
-                    stackPanel.Children.Add(new Button()
-                    {
-                        Name = j.ToString(),
-                        Width = cell_width,
-                        Height = cell_height,
-                        BorderThickness = new Thickness(1),
-                        BorderBrush = new SolidColorBrush() { Color = Windows.UI.Color.FromArgb(1, 0, 0, 0) },
-                        Background = backgroundColor
-                    });
-                }
-
-                game_field.Children.Add(stackPanel);
-            }
-
-            
+            screen.Children.Add(gameField);
+            screen.Children.Add(buttonsField);
         }
 
-        private void make_step_button_Click(object sender, RoutedEventArgs e)
+        private void MakeStepButtonClick(object sender, RoutedEventArgs e)
         {
-            engine.MakeStepForward();
+            mainController.MakeStepForward();
 
-            MapFieldToScreenField();
-        }
-
-        private void MapFieldToScreenField()
-        {
-            UIElementCollection rows = game_field.Children;
-            for (int i = 0; i < engine.Field.Length; i++)
-            {
-                StackPanel row = rows.ElementAt(i) as StackPanel;
-                for (int j = 0; j < engine.Field[i].Length; j++)
-                {
-                    Button button = row.Children.ElementAt(j) as Button;
-
-                    SolidColorBrush backgroundColor = new SolidColorBrush();
-
-                    backgroundColor.Color = (engine.Field[i][j]) ?
-                        Windows.UI.Color.FromArgb(255, 0, 0, 0) :
-                        Windows.UI.Color.FromArgb(255, 255, 255, 255);
-
-                    button.Background = backgroundColor;
-                }
-            }
-        }
+            mainController.MapFieldToScreenField();
+        }        
     }
 }

@@ -8,14 +8,7 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
+    <StackPanel x:Name="screen" Orientation="Vertical">
         
-
-        <StackPanel x:Name="game_field" Orientation="Vertical"
-                    Margin="0 10 0 10">
-            
-        </StackPanel>
-        <Button x:Name="make_step_button" Content="Make Step"
-                Click="make_step_button_Click" />
-    </Grid>
+    </StackPanel>
 </Page>

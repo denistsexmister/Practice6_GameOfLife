@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Practice6_GameOfLife
 {
-    public class Engine
+    public class GameOfLifeEngine
     {
-        private readonly int MAX_STEPS;
         private readonly int FIELD_WIDTH;
         private readonly int FIELD_HEIGHT;
 
@@ -19,11 +18,10 @@ namespace Practice6_GameOfLife
         private bool[][] nextStep;
         
 
-        public Engine(int MAX_STEPS, int FIELD_HEIGHT, int FIELD_WIDTH,
+        public GameOfLifeEngine(int FIELD_HEIGHT, int FIELD_WIDTH,
             ILifeAndSurvivalRules lifeAndSurvivalRules,
             INeighborsCountingRules neighborsCountingRules)
         {
-            this.MAX_STEPS = MAX_STEPS;
             this.FIELD_HEIGHT = FIELD_HEIGHT;
             this.FIELD_WIDTH = FIELD_WIDTH;
             
