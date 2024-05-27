@@ -22,12 +22,7 @@ namespace Practice6_GameOfLife
     /// </summary>
     public sealed partial class MainGamePage : Page
     {
-        private readonly double width;
-        private readonly double height;
-        private readonly double cell_width;
-        private readonly double cell_height;
-
-        private readonly MainController mainController;
+        private readonly MainController mainController = new MainController(800, 320, 16);
 
         private readonly StackPanel gameField = new StackPanel()
         {
@@ -44,7 +39,6 @@ namespace Practice6_GameOfLife
         {
             this.InitializeComponent();
 
-            mainController = new MainController(800, 320, 16);
 
             gameField.Children.Add(mainController.Field);
 
@@ -54,11 +48,24 @@ namespace Practice6_GameOfLife
                 Content = "Make Step"
             };
             makeStepButton.Click += MakeStepButtonClick;
+            Button playSimulationButton = new Button()
+            {
+                Name = "playSimulationButton",
+                Content = "Play"
+            };
+            playSimulationButton.Click += PlaySimulationButtonClick;
+
             buttonsField.Children.Add(makeStepButton);
+            buttonsField.Children.Add(playSimulationButton);
 
 
             screen.Children.Add(gameField);
             screen.Children.Add(buttonsField);
+        }
+
+        private void PlaySimulationButtonClick(object sender, RoutedEventArgs e)
+        {
+            mainController.PlaySimulation();
         }
 
         private void MakeStepButtonClick(object sender, RoutedEventArgs e)
@@ -66,6 +73,6 @@ namespace Practice6_GameOfLife
             mainController.MakeStepForward();
 
             mainController.MapFieldToScreenField();
-        }        
+        }
     }
 }

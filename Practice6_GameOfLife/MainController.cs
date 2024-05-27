@@ -29,6 +29,10 @@ namespace Practice6_GameOfLife
 
         public MainController(double width, double height, double cell_size)
         {
+            this.width = width;
+            this.height = height;
+            this.cell_size = cell_size;
+
             engine = new GameOfLifeEngine((int)(height / cell_size),
                 (int)(width / cell_size),
                 new StandardLifeAndSurvivalRules(),
@@ -67,6 +71,11 @@ namespace Practice6_GameOfLife
 
                 field.Children.Add(row);
             }
+        }
+
+        public void PlaySimulation()
+        {
+
         }
 
         public void MakeStepForward()
