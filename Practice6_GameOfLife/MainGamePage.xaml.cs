@@ -58,7 +58,7 @@ namespace Practice6_GameOfLife
             {
                 Name = "speedSlider",
                 Minimum = 0.5,
-                Maximum = 1.5,
+                Maximum = 2,
                 Value = 1,
                 StepFrequency = 0.5,
                 Width = 100,
@@ -79,7 +79,8 @@ namespace Practice6_GameOfLife
 
         private void SpeedSlider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
         {
-            mainController.TimeBetweenSteps
+            Slider speedSlider = sender as Slider;
+            mainController.TimeModifier = speedSlider.Value;
         }
 
         private void PlaySimulationButtonClick(object sender, RoutedEventArgs e)

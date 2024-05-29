@@ -12,7 +12,6 @@ namespace Practice6_GameOfLife
         private readonly int FIELD_WIDTH;
         private readonly int FIELD_HEIGHT;
 
-        private int timeBetweenSteps;
         private bool isSimulationRun;
 
         private readonly ILifeAndSurvivalRules lifeAndSurvivalRules;
@@ -22,15 +21,12 @@ namespace Practice6_GameOfLife
         private bool[][] nextStep;
 
 
-        public GameOfLifeEngine(int FIELD_HEIGHT, int FIELD_WIDTH, ref int timeBetweenSteps,
+        public GameOfLifeEngine(int FIELD_HEIGHT, int FIELD_WIDTH,
             ILifeAndSurvivalRules lifeAndSurvivalRules,
             INeighborsCountingRules neighborsCountingRules)
         {
             this.FIELD_HEIGHT = FIELD_HEIGHT;
             this.FIELD_WIDTH = FIELD_WIDTH;
-
-            this.timeBetweenSteps = timeBetweenSteps;
-
 
             this.lifeAndSurvivalRules = lifeAndSurvivalRules;
             this.neighborsCountingRules = neighborsCountingRules;
@@ -75,14 +71,7 @@ namespace Practice6_GameOfLife
                 isSimulationRun = value;
             }
         }
-
-        public int TimeBetweenSteps
-        {
-            get
-            {
-                return timeBetweenSteps;
-            }
-        }        
+   
 
         public void MakeStepForward()
         {
