@@ -31,11 +31,18 @@ namespace Practice6_GameOfLife
 
             appView.SetPreferredMinSize(new Size(800, 600));
             appView.TryResizeView(new Size(800, 600));
+
+            GameSettings gameSettings = GameSettings.GetInstance();
         }
 
         private void play_button_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(MainGamePage));
+        }
+
+        private void settings_button_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(SettingsPage));
         }
 
         private void exit_button_Click(object sender, RoutedEventArgs e)

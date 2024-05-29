@@ -12,6 +12,9 @@
         <Button x:Name="play_button" Content="Play" HorizontalAlignment="Center"
                 MinWidth="100" MinHeight="40" Click="play_button_Click"
                 Margin="10 10 10 10"/>
+        <Button x:Name="settings_button" Content="Settings" HorizontalAlignment="Center"
+                MinWidth="100" MinHeight="40" Click="settings_button_Click"
+                Margin="10 10 10 10"/>
         <Button x:Name="exit_button" Content="Exit" HorizontalAlignment="Center"
                 MinWidth="100" MinHeight="40" Click="exit_button_Click"
                 Margin="10 10 10 10"/>
