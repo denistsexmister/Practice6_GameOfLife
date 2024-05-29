@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Runtime.Serialization.Json;
+using System.Text;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -56,7 +59,7 @@ namespace Practice6_GameOfLife
             playSimulationButton.Click += PlaySimulationButtonClick;
 
             StackPanel speedStackPanel = new StackPanel()
-            { 
+            {
                 Orientation = Orientation.Horizontal
             };
             TextBlock speedText = new TextBlock()
@@ -74,24 +77,57 @@ namespace Practice6_GameOfLife
                 TickFrequency = 0.5,
                 TickPlacement = TickPlacement.Outside
             };
-            speedSlider.ValueChanged += SpeedSlider_ValueChanged;
+            speedSlider.ValueChanged += SpeedSliderValueChanged;
 
             speedStackPanel.Children.Add(speedText);
             speedStackPanel.Children.Add(speedSlider);
 
+            StackPanel saveStackPanel = new StackPanel() { Orientation = Orientation.Horizontal };
+            TextBox filenameBox = new TextBox()
+            {
+                Name = "filenameBox",
+                PlaceholderText = "Write filename to save...",
+                Width = 400
+            };
+            Button saveButton = new Button()
+            {
+                Name = "saveButton",
+                Content = "Save current field"
+            };
+            saveButton.Click += SaveButtonClick;
 
+            saveStackPanel.Children.Add(filenameBox);
+            saveStackPanel.Children.Add(saveButton);
 
 
             buttonsField.Children.Add(makeStepButton);
             buttonsField.Children.Add(playSimulationButton);
             buttonsField.Children.Add(speedStackPanel);
+            buttonsField.Children.Add(saveStackPanel);
 
 
             screen.Children.Add(gameField);
             screen.Children.Add(buttonsField);
         }
 
-        private void SpeedSlider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
+        private async void SaveButtonClick(object sender, RoutedEventArgs e)
+        {
+            TextBox filenameBox = (VisualTreeHelper.GetParent((sender as Button)) as StackPanel).Children.ElementAt(0) as TextBox;
+            string filename = filenameBox.Text ?? "default";
+            if (filename.Equals("")) filename = "default";
+
+            StorageFolder installedLocation = Windows.ApplicationModel.Package.Current.InstalledLocation;
+
+            StorageFolder savesFolder = await installedLocation.GetFolderAsync("SavedFields");
+
+            StorageFile saveFile = await savesFolder.CreateFileAsync(filename, CreationCollisionOption.GenerateUniqueName);
+
+            string fieldString = mainController.GetFieldInStringFormat();
+
+            await FileIO.WriteTextAsync(saveFile, fieldString);
+        }
+
+        private void SpeedSliderValueChanged(object sender, RangeBaseValueChangedEventArgs e)
         {
             Slider speedSlider = sender as Slider;
             mainController.TimeModifier = speedSlider.Value;

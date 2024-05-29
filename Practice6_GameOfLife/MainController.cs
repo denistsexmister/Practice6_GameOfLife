@@ -176,5 +176,23 @@ namespace Practice6_GameOfLife
 
             fieldButton.Background = backgroundColor;
         }
+
+        public string GetFieldInStringFormat()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            for (int i = 0; i < _engine.Field.Length; i++)
+            {
+                for (int j = 0; j < _engine.Field[i].Length; j++)
+                {
+                    sb.Append(_engine.Field[i][j]);
+                    if (j < _engine.Field[i].Length - 1)
+                        sb.Append(",");
+                }
+                sb.AppendLine();
+            }
+
+            return sb.ToString();
+        }
     }
 }
