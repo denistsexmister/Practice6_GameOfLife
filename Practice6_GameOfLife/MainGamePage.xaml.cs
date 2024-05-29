@@ -22,7 +22,7 @@ namespace Practice6_GameOfLife
     /// </summary>
     public sealed partial class MainGamePage : Page
     {
-        private readonly MainController mainController = new MainController(800, 320, 16);
+        private readonly MainController mainController;
 
         private readonly StackPanel gameField = new StackPanel()
         {
@@ -38,7 +38,7 @@ namespace Practice6_GameOfLife
         public MainGamePage()
         {
             this.InitializeComponent();
-
+            mainController = new MainController(800, 320, 16, this.Dispatcher);
 
             gameField.Children.Add(mainController.Field);
 

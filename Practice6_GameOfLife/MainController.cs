@@ -13,37 +13,39 @@ namespace Practice6_GameOfLife
 {
     public class MainController
     {
-        private readonly double width;
-        private readonly double height;
-        private readonly double cell_size;
+        private readonly double _width;
+        private readonly double _height;
+        private readonly double _cell_size;
 
-        private readonly GameOfLifeEngine engine;
-        private Thread simulationThread; 
+        private readonly GameOfLifeEngine _engine;
+        private readonly CoreDispatcher _dispatcher;
+        private Task _simulationTask;
 
-        private readonly StackPanel field;
+        private readonly StackPanel _field;
 
         public StackPanel Field
         {
             get
             {
-                return field;
+                return _field;
             }
         }
 
-        public MainController(double width, double height, double cell_size)
+        public MainController(double width, double height, double cell_size, CoreDispatcher dispatcher)
         {
-            this.width = width;
-            this.height = height;
-            this.cell_size = cell_size;
+            this._width = width;
+            this._height = height;
+            this._cell_size = cell_size;
+            this._dispatcher = dispatcher;
 
-            engine = new GameOfLifeEngine((int)(height / cell_size),
+            _engine = new GameOfLifeEngine((int)(height / cell_size),
                 (int)(width / cell_size),
                 1000,
                 new StandardLifeAndSurvivalRules(),
                 new StandardNeighborsCountingRules());
 
 
-            field = new StackPanel();
+            _field = new StackPanel();
 
 
             for (int i = 0; i < (height / cell_size); i++)
@@ -58,7 +60,7 @@ namespace Practice6_GameOfLife
                 {
                     SolidColorBrush backgroundColor = new SolidColorBrush();
 
-                    backgroundColor.Color = (engine.Field[i][j]) ?
+                    backgroundColor.Color = (_engine.Field[i][j]) ?
                         Windows.UI.Color.FromArgb(255, 0, 0, 0) :
                         Windows.UI.Color.FromArgb(255, 255, 255, 255);
 
@@ -73,54 +75,61 @@ namespace Practice6_GameOfLife
                     });
                 }
 
-                field.Children.Add(row);
+                _field.Children.Add(row);
             }
         }
 
-        public void PlayOrStopSimulation()
+        public async void PlayOrStopSimulation()
         {
-            if (engine.IsSimulationRun)
+            if (_engine.IsSimulationRun)
             {
-                engine.IsSimulationRun = false;
-                simulationThread = null;
+                _engine.IsSimulationRun = false;
+                if (_simulationTask != null)
+                {
+                    await _simulationTask;
+                }
             }
             else
             {
                 
-                engine.IsSimulationRun = true;
-                Task.Run(() => { RunSimulationForward(); });
-                /*simulationThread = new Thread(RunSimulationForward);
-                simulationThread.Start();*/
+                _engine.IsSimulationRun = true;
+                _simulationTask = Task.Run(() => { RunSimulationForward(); });
+                await _simulationTask;
             }
         }
 
-        private void RunSimulationForward()
+        private async void RunSimulationForward()
         {
-            while (engine.IsSimulationRun)
+            while (_engine.IsSimulationRun)
             {
-                engine.MakeStepForward();
-                MapFieldToScreenField();
-                Thread.Sleep(engine.TimeBetweenSteps);
+                _engine.MakeStepForward();
+
+                await _dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                {
+                    MapFieldToScreenField();
+                });
+                
+                Thread.Sleep(_engine.TimeBetweenSteps);
             }
         }
 
         public void MakeStepForward()
         {
-            engine.MakeStepForward();
+            _engine.MakeStepForward();
         }
 
         public void MapFieldToScreenField()
         {
-            for (int i = 0; i < engine.Field.Length; i++)
+            for (int i = 0; i < _engine.Field.Length; i++)
             {
-                StackPanel row = field.Children.ElementAt(i) as StackPanel;
-                for (int j = 0; j < engine.Field[i].Length; j++)
+                StackPanel row = _field.Children.ElementAt(i) as StackPanel;
+                for (int j = 0; j < _engine.Field[i].Length; j++)
                 {
                     Button button = row.Children.ElementAt(j) as Button;
 
                     SolidColorBrush backgroundColor = new SolidColorBrush();
 
-                    backgroundColor.Color = (engine.Field[i][j]) ?
+                    backgroundColor.Color = (_engine.Field[i][j]) ?
                         Windows.UI.Color.FromArgb(255, 0, 0, 0) :
                         Windows.UI.Color.FromArgb(255, 255, 255, 255);
 
