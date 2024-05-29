@@ -64,7 +64,7 @@ namespace Practice6_GameOfLife
                         Windows.UI.Color.FromArgb(255, 0, 0, 0) :
                         Windows.UI.Color.FromArgb(255, 255, 255, 255);
 
-                    row.Children.Add(new Button()
+                    Button fieldButton = new Button()
                     {
                         Name = j.ToString(),
                         Width = cell_size,
@@ -72,7 +72,10 @@ namespace Practice6_GameOfLife
                         BorderThickness = new Thickness(1),
                         BorderBrush = new SolidColorBrush() { Color = Windows.UI.Color.FromArgb(1, 0, 0, 0) },
                         Background = backgroundColor
-                    });
+                    };
+                    fieldButton.Click += FieldButtonClick;
+
+                    row.Children.Add(fieldButton);
                 }
 
                 _field.Children.Add(row);
@@ -136,6 +139,11 @@ namespace Practice6_GameOfLife
                     button.Background = backgroundColor;
                 }
             }
+        }
+
+        public void FieldButtonClick(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
         }
     }
 }
