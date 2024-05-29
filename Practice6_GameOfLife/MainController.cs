@@ -7,6 +7,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml;
 using System.Threading;
+using Windows.UI.Core;
 
 namespace Practice6_GameOfLife
 {
@@ -81,16 +82,20 @@ namespace Practice6_GameOfLife
             if (engine.IsSimulationRun)
             {
                 engine.IsSimulationRun = false;
+                simulationThread = null;
             }
             else
             {
-                simulationThread = new Thread(RunSimulationForward);
+                
+                engine.IsSimulationRun = true;
+                Task.Run(() => { RunSimulationForward(); });
+                /*simulationThread = new Thread(RunSimulationForward);
+                simulationThread.Start();*/
             }
         }
 
         private void RunSimulationForward()
         {
-            engine.IsSimulationRun = true;
             while (engine.IsSimulationRun)
             {
                 engine.MakeStepForward();
