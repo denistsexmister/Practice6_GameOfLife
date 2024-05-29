@@ -20,15 +20,16 @@ namespace Practice6_GameOfLife
         private readonly GameOfLifeEngine _engine;
         private readonly CoreDispatcher _dispatcher;
         private Task _simulationTask;
+        private int _timeBetweenSteps;
 
         private readonly StackPanel _field;
 
-        public StackPanel Field
+        public StackPanel Field => _field;
+
+        public int TimeBetweenSteps
         {
-            get
-            {
-                return _field;
-            }
+            get => _timeBetweenSteps;
+            set => _timeBetweenSteps = value;
         }
 
         public MainController(double width, double height, double cell_size, CoreDispatcher dispatcher)
@@ -40,7 +41,7 @@ namespace Practice6_GameOfLife
 
             _engine = new GameOfLifeEngine((int)(height / cell_size),
                 (int)(width / cell_size),
-                1000,
+                ref _timeBetweenSteps,
                 new StandardLifeAndSurvivalRules(),
                 //new StandardNeighborsCountingRules());
                 new UnboundedNeighborsCountingRules());

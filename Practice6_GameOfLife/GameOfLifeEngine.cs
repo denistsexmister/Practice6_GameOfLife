@@ -22,7 +22,7 @@ namespace Practice6_GameOfLife
         private bool[][] nextStep;
 
 
-        public GameOfLifeEngine(int FIELD_HEIGHT, int FIELD_WIDTH, int timeBetweenSteps,
+        public GameOfLifeEngine(int FIELD_HEIGHT, int FIELD_WIDTH, ref int timeBetweenSteps,
             ILifeAndSurvivalRules lifeAndSurvivalRules,
             INeighborsCountingRules neighborsCountingRules)
         {

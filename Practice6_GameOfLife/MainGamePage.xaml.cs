@@ -54,13 +54,32 @@ namespace Practice6_GameOfLife
                 Content = "Play"
             };
             playSimulationButton.Click += PlaySimulationButtonClick;
+            Slider speedSlider = new Slider()
+            {
+                Name = "speedSlider",
+                Minimum = 0.5,
+                Maximum = 1.5,
+                Value = 1,
+                StepFrequency = 0.5,
+                Width = 100,
+                TickFrequency = 0.5,
+                TickPlacement = TickPlacement.Outside
+            };
+            speedSlider.ValueChanged += SpeedSlider_ValueChanged;
+
 
             buttonsField.Children.Add(makeStepButton);
             buttonsField.Children.Add(playSimulationButton);
+            buttonsField.Children.Add(speedSlider);
 
 
             screen.Children.Add(gameField);
             screen.Children.Add(buttonsField);
+        }
+
+        private void SpeedSlider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
+        {
+            mainController.TimeBetweenSteps
         }
 
         private void PlaySimulationButtonClick(object sender, RoutedEventArgs e)
