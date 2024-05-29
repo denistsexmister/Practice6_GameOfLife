@@ -143,7 +143,22 @@ namespace Practice6_GameOfLife
 
         public void FieldButtonClick(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            Button fieldButton = sender as Button;
+
+            int width_cell = Convert.ToInt32(fieldButton.Name);
+            var row = (VisualTreeHelper.GetParent(fieldButton) as StackPanel);//as UIElement);
+            int height_cell = Convert.ToInt32(row.Name);
+
+
+            _engine.Field[height_cell][width_cell] = !_engine.Field[height_cell][width_cell];
+
+            SolidColorBrush backgroundColor = new SolidColorBrush();
+
+            backgroundColor.Color = (_engine.Field[height_cell][width_cell]) ?
+                Windows.UI.Color.FromArgb(255, 0, 0, 0) :
+                Windows.UI.Color.FromArgb(255, 255, 255, 255);
+
+            fieldButton.Background = backgroundColor;
         }
     }
 }
