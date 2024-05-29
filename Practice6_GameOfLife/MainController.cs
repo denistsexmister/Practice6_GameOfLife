@@ -42,8 +42,8 @@ namespace Practice6_GameOfLife
                 (int)(width / cell_size),
                 1000,
                 new StandardLifeAndSurvivalRules(),
-                new StandardNeighborsCountingRules());
-
+                //new StandardNeighborsCountingRules());
+                new UnboundedNeighborsCountingRules());
 
             _field = new StackPanel();
 
