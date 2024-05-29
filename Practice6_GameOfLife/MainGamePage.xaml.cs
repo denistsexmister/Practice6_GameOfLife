@@ -54,6 +54,15 @@ namespace Practice6_GameOfLife
                 Content = "Play"
             };
             playSimulationButton.Click += PlaySimulationButtonClick;
+
+            StackPanel speedStackPanel = new StackPanel()
+            { 
+                Orientation = Orientation.Horizontal
+            };
+            TextBlock speedText = new TextBlock()
+            {
+                Text = "Speed modifier: "
+            };
             Slider speedSlider = new Slider()
             {
                 Name = "speedSlider",
@@ -67,10 +76,15 @@ namespace Practice6_GameOfLife
             };
             speedSlider.ValueChanged += SpeedSlider_ValueChanged;
 
+            speedStackPanel.Children.Add(speedText);
+            speedStackPanel.Children.Add(speedSlider);
+
+
+
 
             buttonsField.Children.Add(makeStepButton);
             buttonsField.Children.Add(playSimulationButton);
-            buttonsField.Children.Add(speedSlider);
+            buttonsField.Children.Add(speedStackPanel);
 
 
             screen.Children.Add(gameField);

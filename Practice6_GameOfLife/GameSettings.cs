@@ -8,26 +8,7 @@ namespace Practice6_GameOfLife
 {
     public class GameSettings
     {
-        private FieldBorderRules _borderRules;
-        private GameSettings()
-        {
-            
-        }
-
-        private static GameSettings _instance;
-
-        public static GameSettings GetInstance()
-        {
-            if (_instance == null)
-            {
-                _instance = new GameSettings();
-            }
-
-            return _instance;
-        }
-
-        public FieldBorderRules BorderRules => _borderRules;
-
+        public static FieldBorderRules BorderRules = FieldBorderRules.BOUNDED;
 
     }
 }

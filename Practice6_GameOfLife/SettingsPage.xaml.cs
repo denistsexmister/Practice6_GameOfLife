@@ -29,7 +29,13 @@ namespace Practice6_GameOfLife
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            e.AddedItems.ElementAt(0);
+            string boundSettings = ((sender as ComboBox).SelectedItem as ComboBoxItem).Name;
+            GameSettings.BorderRules = boundSettings.Equals("bounded") ? FieldBorderRules.BOUNDED : (boundSettings.Equals("unbounded")) ? FieldBorderRules.UNBOUNDED : FieldBorderRules.BOUNDED;
+        }
+
+        private void exit_button_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(MainPage));
         }
     }
 }

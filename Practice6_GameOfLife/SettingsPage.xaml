@@ -9,14 +9,19 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <StackPanel Margin="10 10 10 10" Orientation="Vertical">
+        <Button x:Name="exit_button" Content="Exit" Click="exit_button_Click"/>
+        <TextBlock x:Name="text_block" />
+        
         <ComboBox Header="Field border rules" SelectionChanged="ComboBox_SelectionChanged">
-            <ComboBoxItem x:Name="standard" IsSelected="True">
+            <ComboBoxItem x:Name="bounded" IsSelected="True">
                 <TextBlock Text="Bounded" />
             </ComboBoxItem>
             <ComboBoxItem x:Name="unbounded">
                 <TextBlock Text="Unbounded" />
             </ComboBoxItem>
         </ComboBox>
+
         
+
     </StackPanel>
 </Page>

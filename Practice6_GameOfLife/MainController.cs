@@ -43,11 +43,23 @@ namespace Practice6_GameOfLife
             this._timeModifier = 1;
             this._timeBetweenSteps = 100;
 
+            INeighborsCountingRules neighborsCountingRules;
+            if (GameSettings.BorderRules == FieldBorderRules.BOUNDED)
+            {
+                neighborsCountingRules = new StandardNeighborsCountingRules();
+            }
+            else if (GameSettings.BorderRules == FieldBorderRules.UNBOUNDED)
+            {
+                neighborsCountingRules = new UnboundedNeighborsCountingRules();
+            }   
+            else
+            {
+                neighborsCountingRules = new StandardNeighborsCountingRules();
+            }
             _engine = new GameOfLifeEngine((int)(height / cell_size),
                 (int)(width / cell_size),
                 new StandardLifeAndSurvivalRules(),
-                //new StandardNeighborsCountingRules());
-                new UnboundedNeighborsCountingRules());
+                neighborsCountingRules);
 
             _field = new StackPanel();
 

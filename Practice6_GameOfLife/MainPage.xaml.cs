@@ -31,8 +31,6 @@ namespace Practice6_GameOfLife
 
             appView.SetPreferredMinSize(new Size(800, 600));
             appView.TryResizeView(new Size(800, 600));
-
-            GameSettings gameSettings = GameSettings.GetInstance();
         }
 
         private void play_button_Click(object sender, RoutedEventArgs e)
