@@ -9,6 +9,8 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <StackPanel VerticalAlignment="Center">
+        <TextBlock Text="Conway's Game of Life" HorizontalAlignment="Center"
+                   Margin="0 0 0 100" FontSize="32"/>
         <Button x:Name="play_button" Content="Play" HorizontalAlignment="Center"
                 MinWidth="100" MinHeight="40" Click="play_button_Click"
                 Margin="10 10 10 10"/>
