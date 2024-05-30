@@ -126,6 +126,7 @@ namespace Practice6_GameOfLife
             TextBox filenameBox = (VisualTreeHelper.GetParent((sender as Button)) as StackPanel).Children.ElementAt(0) as TextBox;
             string filename = filenameBox.Text ?? "default";
             if (filename.Equals("")) filename = "default";
+            filename += ".txt";
 
             StorageFolder installedLocation = Windows.ApplicationModel.Package.Current.InstalledLocation;
 

@@ -44,13 +44,6 @@ namespace Practice6_GameOfLife
                     nextStep[i][j] = false;
                 }
             }
-            //temp
-            currentStep[0][1] = true;
-            currentStep[1][2] = true;
-            currentStep[2][0] = true;
-            currentStep[2][1] = true;
-            currentStep[2][2] = true;
-            //temp
         }
 
         public bool[][] Field
