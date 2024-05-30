@@ -191,7 +191,7 @@ namespace Practice6_GameOfLife
             {
                 for (int j = 0; j < _engine.Field[i].Length; j++)
                 {
-                    sb.Append(_engine.Field[i][j]);
+                    sb.Append(_engine.Field[i][j] ? 1 : 0);
                     if (j < _engine.Field[i].Length - 1)
                         sb.Append(",");
                 }

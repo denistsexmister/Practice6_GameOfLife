@@ -96,7 +96,7 @@ namespace Practice6_GameOfLife
                 string[] cols = rows[i].Split(',');
                 for (int j = 0; j < FIELD_WIDTH; j++)
                 {
-                    currentStep[i][j] = bool.Parse(cols[j]);
+                    currentStep[i][j] = Convert.ToBoolean(int.Parse(cols[j]));
                 }
             }
         }
