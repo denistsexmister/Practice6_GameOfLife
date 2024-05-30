@@ -101,7 +101,7 @@ namespace Practice6_GameOfLife
 
         public async Task GetFieldFromFile(string filename)
         {
-            await _engine.GetFieldFromFile(filename);
+            await _engine.LoadFieldFromFile(filename);
         }
 
         public async void PlayOrStopSimulation()

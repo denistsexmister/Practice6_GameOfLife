@@ -26,6 +26,7 @@ namespace Practice6_GameOfLife
         public MainPage()
         {
             this.InitializeComponent();
+            SaveManager.CreateDefaultSaves();
 
             Size windowSize = new Size(800, 600);
             ApplicationView.PreferredLaunchViewSize = windowSize;

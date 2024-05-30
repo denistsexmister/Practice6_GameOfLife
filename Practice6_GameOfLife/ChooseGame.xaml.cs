@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
@@ -33,14 +34,23 @@ namespace Practice6_GameOfLife
                 Margin = new Thickness(0, 0, 0, 10)
             };
             newFieldButton.Click += NewFieldButtonClick;
-            ComboBox chooseFieldFromFile = new ComboBox() { PlaceholderText = "Open existing field", Margin = new Thickness(0, 0, 0, 10) };
-            ReadFieldNamesFromSavedFolder(chooseFieldFromFile);
+            ComboBox chooseFieldFromFile = new ComboBox() 
+            { 
+                PlaceholderText = "Open existing field", 
+                Margin = new Thickness(0, 0, 0, 10), 
+                Name = "chooseExist" 
+            };
             Button backButton = new Button()
             {
                 Content = "Back",
                 Margin = new Thickness(0, 0, 0, 10)
             };
             backButton.Click += BackButtonClick;
+
+            Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, () =>
+            {
+                ReadFieldNamesFromSavedFolder();
+            });
 
             screen.Children.Add(newFieldButton);
             screen.Children.Add(chooseFieldFromFile);
@@ -52,15 +62,13 @@ namespace Practice6_GameOfLife
             Frame.Navigate(typeof(MainPage));
         }
 
-        private async void ReadFieldNamesFromSavedFolder(ComboBox comboBox)
+        private async void ReadFieldNamesFromSavedFolder()
         {
-            StorageFolder installedLocation = Windows.ApplicationModel.Package.Current.InstalledLocation;
+            var comboBox = (ComboBox)this.FindName("chooseExist");
 
-            StorageFolder savesFolder = await installedLocation.GetFolderAsync("SavedFields");
+            var fileNames = await SaveManager.ReadFileNamesFromSavedFolder();
 
-            IReadOnlyList<StorageFile> files = await savesFolder.GetFilesAsync();
-
-            foreach(StorageFile file in files)
+            foreach (StorageFile file in fileNames)
             {
                 Button fieldButton = new Button()
                 {
@@ -70,7 +78,6 @@ namespace Practice6_GameOfLife
                 fieldButton.Click += FieldButtonClick;
                 comboBox.Items.Add(fieldButton);
             }
-
         }
 
         private void FieldButtonClick(object sender, RoutedEventArgs e)
