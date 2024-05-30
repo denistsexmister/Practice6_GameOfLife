@@ -56,5 +56,31 @@ namespace Practice6_GameOfLife
 
             return  await FileIO.ReadTextAsync(file);
         }
+
+        async public static Task CreateDefaultSaves()
+        {
+            StorageFolder savesFolder;
+            try
+            {
+                savesFolder = await myDocs.GetFolderAsync("gameoflife");
+            } 
+            catch(FileNotFoundException)
+            {
+                savesFolder = await myDocs.CreateFolderAsync("gameoflife");
+            }
+
+            StorageFolder installedLocation = Windows.ApplicationModel.Package.Current.InstalledLocation;
+            StorageFolder localSavedFields = await installedLocation.GetFolderAsync("SavedFields");
+
+            StorageFile gliderGun = await localSavedFields.GetFileAsync("Glider_Gun.txt");
+            StorageFile oscillators = await localSavedFields.GetFileAsync("Oscillators.txt");
+            StorageFile spaceships = await localSavedFields.GetFileAsync("Spaceships.txt");
+            StorageFile stillLivesBlocks = await localSavedFields.GetFileAsync("Still_Lives_Blocks.txt");
+
+            await gliderGun.CopyAsync(savesFolder);
+            await oscillators.CopyAsync(savesFolder);
+            await spaceships.CopyAsync(savesFolder);
+            await stillLivesBlocks.CopyAsync(savesFolder);
+        }
     }
 }

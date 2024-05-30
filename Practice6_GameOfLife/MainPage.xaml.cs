@@ -26,6 +26,7 @@ namespace Practice6_GameOfLife
         public MainPage()
         {
             this.InitializeComponent();
+            SaveManager.CreateDefaultSaves();
 
             ApplicationView appView = ApplicationView.GetForCurrentView();
 
