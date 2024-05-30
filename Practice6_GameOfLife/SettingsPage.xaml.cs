@@ -25,6 +25,8 @@ namespace Practice6_GameOfLife
         public SettingsPage()
         {
             this.InitializeComponent();
+
+            select.SelectedIndex = (GameSettings.BorderRules == FieldBorderRules.UNBOUNDED) ? 1 : 0;
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -33,7 +35,7 @@ namespace Practice6_GameOfLife
             GameSettings.BorderRules = boundSettings.Equals("bounded") ? FieldBorderRules.BOUNDED : (boundSettings.Equals("unbounded")) ? FieldBorderRules.UNBOUNDED : FieldBorderRules.BOUNDED;
         }
 
-        private void exit_button_Click(object sender, RoutedEventArgs e)
+        private void back_button_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(MainPage));
         }

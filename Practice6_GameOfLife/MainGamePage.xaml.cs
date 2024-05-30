@@ -86,8 +86,7 @@ namespace Practice6_GameOfLife
             TextBox filenameBox = new TextBox()
             {
                 Name = "filenameBox",
-                PlaceholderText = "Write filename to save...",
-                Width = 400
+                PlaceholderText = "Write filename to save..."
             };
             Button saveButton = new Button()
             {
@@ -99,15 +98,27 @@ namespace Practice6_GameOfLife
             saveStackPanel.Children.Add(filenameBox);
             saveStackPanel.Children.Add(saveButton);
 
+            Button backButton = new Button()
+            {
+                Content = "Back"
+            };
+            backButton.Click += BackButtonClick;
+
 
             buttonsField.Children.Add(makeStepButton);
             buttonsField.Children.Add(playSimulationButton);
             buttonsField.Children.Add(speedStackPanel);
             buttonsField.Children.Add(saveStackPanel);
+            buttonsField.Children.Add(backButton);
 
 
             screen.Children.Add(gameField);
             screen.Children.Add(buttonsField);
+        }
+
+        private void BackButtonClick(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(ChooseGame));
         }
 
         protected async override void OnNavigatedTo(NavigationEventArgs e)

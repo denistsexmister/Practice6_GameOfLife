@@ -30,14 +30,26 @@ namespace Practice6_GameOfLife
             Button newFieldButton = new Button()
             {
                 Content = "Create new field",
-                Width = 100
+                Margin = new Thickness(0, 0, 0, 10)
             };
             newFieldButton.Click += NewFieldButtonClick;
-            ComboBox chooseFieldFromFile = new ComboBox() { PlaceholderText = "Open existing field" };
+            ComboBox chooseFieldFromFile = new ComboBox() { PlaceholderText = "Open existing field", Margin = new Thickness(0, 0, 0, 10) };
             ReadFieldNamesFromSavedFolder(chooseFieldFromFile);
+            Button backButton = new Button()
+            {
+                Content = "Back",
+                Margin = new Thickness(0, 0, 0, 10)
+            };
+            backButton.Click += BackButtonClick;
 
             screen.Children.Add(newFieldButton);
             screen.Children.Add(chooseFieldFromFile);
+            screen.Children.Add(backButton);
+        }
+
+        private void BackButtonClick(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(MainPage));
         }
 
         private async void ReadFieldNamesFromSavedFolder(ComboBox comboBox)
