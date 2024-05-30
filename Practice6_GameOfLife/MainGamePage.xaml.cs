@@ -154,19 +154,9 @@ namespace Practice6_GameOfLife
         private async void SaveButtonClick(object sender, RoutedEventArgs e)
         {
             TextBox filenameBox = (VisualTreeHelper.GetParent((sender as Button)) as StackPanel).Children.ElementAt(0) as TextBox;
-            string filename = filenameBox.Text ?? "default";
-            if (filename.Equals("")) filename = "default";
-            filename += ".txt";
-
-            StorageFolder installedLocation = Windows.ApplicationModel.Package.Current.InstalledLocation;
-
-            StorageFolder savesFolder = await installedLocation.GetFolderAsync("SavedFields");
-
-            StorageFile saveFile = await savesFolder.CreateFileAsync(filename, CreationCollisionOption.GenerateUniqueName);
-
             string fieldString = mainController.GetFieldInStringFormat();
 
-            await FileIO.WriteTextAsync(saveFile, fieldString);
+            SaveManager.SaveFile(filenameBox.Text, fieldString);
         }
 
         private void SpeedSliderValueChanged(object sender, RangeBaseValueChangedEventArgs e)
