@@ -147,7 +147,6 @@
     <Content Include="SavedFields\Oscillators.txt" />
     <Content Include="SavedFields\Spaceships.txt" />
     <Content Include="SavedFields\Still_Lives_Blocks.txt" />
-    <Content Include="SavedFields\temp.txt" />
     <Compile Include="SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>

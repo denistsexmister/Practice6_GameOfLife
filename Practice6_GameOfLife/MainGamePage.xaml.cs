@@ -45,22 +45,38 @@ namespace Practice6_GameOfLife
 
             gameField.Children.Add(mainController.Field);
 
+            Grid buttonsGrid = new Grid();
+            ColumnDefinition firstColumn = new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) };
+            ColumnDefinition secondColumn = new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) };
+            buttonsGrid.ColumnDefinitions.Add(firstColumn);
+            buttonsGrid.ColumnDefinitions.Add(secondColumn);
+
+            StackPanel leftStackPanel = new StackPanel();
+            StackPanel rightStackPanel = new StackPanel();
+            Grid.SetColumn(leftStackPanel, 0);
+            Grid.SetColumn(rightStackPanel, 1);
+            buttonsGrid.Children.Add(leftStackPanel);
+            buttonsGrid.Children.Add(rightStackPanel);
+
             Button makeStepButton = new Button()
             {
                 Name = "makeStepButton",
-                Content = "Make Step"
+                Content = "Make Step",
+                Margin = new Thickness(0, 0, 0, 10)
             };
             makeStepButton.Click += MakeStepButtonClick;
             Button playSimulationButton = new Button()
             {
                 Name = "playSimulationButton",
-                Content = "Play"
+                Content = "Play",
+                Margin = new Thickness(0, 0, 0, 10)
             };
             playSimulationButton.Click += PlaySimulationButtonClick;
 
             StackPanel speedStackPanel = new StackPanel()
             {
-                Orientation = Orientation.Horizontal
+                Orientation = Orientation.Horizontal,
+                Margin = new Thickness(0, 0, 0, 10)
             };
             TextBlock speedText = new TextBlock()
             {
@@ -82,11 +98,12 @@ namespace Practice6_GameOfLife
             speedStackPanel.Children.Add(speedText);
             speedStackPanel.Children.Add(speedSlider);
 
-            StackPanel saveStackPanel = new StackPanel() { Orientation = Orientation.Horizontal };
+            StackPanel saveStackPanel = new StackPanel() { Orientation = Orientation.Horizontal, Margin = new Thickness(0, 0, 0, 10) };
             TextBox filenameBox = new TextBox()
             {
                 Name = "filenameBox",
-                PlaceholderText = "Write filename to save..."
+                PlaceholderText = "Write filename to save...",
+                Margin = new Thickness(0, 0, 10, 0)
             };
             Button saveButton = new Button()
             {
@@ -104,12 +121,14 @@ namespace Practice6_GameOfLife
             };
             backButton.Click += BackButtonClick;
 
+            leftStackPanel.Children.Add(makeStepButton);
+            leftStackPanel.Children.Add(playSimulationButton);
+            leftStackPanel.Children.Add(speedStackPanel);
+            leftStackPanel.Children.Add(backButton);
 
-            buttonsField.Children.Add(makeStepButton);
-            buttonsField.Children.Add(playSimulationButton);
-            buttonsField.Children.Add(speedStackPanel);
-            buttonsField.Children.Add(saveStackPanel);
-            buttonsField.Children.Add(backButton);
+            rightStackPanel.Children.Add(saveStackPanel);
+
+            buttonsField.Children.Add(buttonsGrid);
 
 
             screen.Children.Add(gameField);
@@ -158,6 +177,7 @@ namespace Practice6_GameOfLife
 
         private void PlaySimulationButtonClick(object sender, RoutedEventArgs e)
         {
+            (sender as Button).Content = (sender as Button).Content.Equals("Play") ? "Stop" : "Play";
             mainController.PlayOrStopSimulation();
         }
 
