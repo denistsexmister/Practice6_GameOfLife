@@ -110,6 +110,17 @@ namespace Practice6_GameOfLife
             screen.Children.Add(buttonsField);
         }
 
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            if (e.Parameter is string filename)
+            {
+                await mainController.GetFieldFromFile(filename);
+                mainController.MapFieldToScreenField();
+            }
+        }
+
         private async void SaveButtonClick(object sender, RoutedEventArgs e)
         {
             TextBox filenameBox = (VisualTreeHelper.GetParent((sender as Button)) as StackPanel).Children.ElementAt(0) as TextBox;

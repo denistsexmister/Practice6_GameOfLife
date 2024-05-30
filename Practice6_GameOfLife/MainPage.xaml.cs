@@ -35,7 +35,7 @@ namespace Practice6_GameOfLife
 
         private void play_button_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(MainGamePage));
+            Frame.Navigate(typeof(ChooseGame));
         }
 
         private void settings_button_Click(object sender, RoutedEventArgs e)

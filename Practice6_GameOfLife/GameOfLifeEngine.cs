@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.Storage;
 
 namespace Practice6_GameOfLife
 {
@@ -87,6 +88,28 @@ namespace Practice6_GameOfLife
 
             CopyFieldToField(nextStep, currentStep);
         }
+
+        public async Task GetFieldFromFile(string filename)
+        {
+            StorageFolder installedLocation = Windows.ApplicationModel.Package.Current.InstalledLocation;
+
+            StorageFolder savesFolder = await installedLocation.GetFolderAsync("SavedFields");
+
+            StorageFile file = await savesFolder.GetFileAsync(filename);
+
+            string content = await FileIO.ReadTextAsync(file);
+            string[] rows = content.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+
+            for (int i = 0; i < FIELD_HEIGHT; i++)
+            {
+                string[] cols = rows[i].Split(',');
+                for (int j = 0; j < FIELD_WIDTH; j++)
+                {
+                    currentStep[i][j] = bool.Parse(cols[j]);
+                }
+            }
+        }
+
         private void CopyFieldToField(bool[][] firstField, bool[][] secondField)
         {
             for (int i = 0; i < firstField.Length; i++)

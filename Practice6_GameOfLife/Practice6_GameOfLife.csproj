@@ -127,6 +127,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ChooseGame.xaml.cs">
+      <DependentUpon>ChooseGame.xaml</DependentUpon>
+    </Compile>
     <Compile Include="FieldBorderRules.cs" />
     <Compile Include="GameOfLifeEngine.cs" />
     <Compile Include="GameSettings.cs" />
@@ -168,6 +171,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="ChooseGame.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainGamePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -56,6 +56,7 @@ namespace Practice6_GameOfLife
             {
                 neighborsCountingRules = new StandardNeighborsCountingRules();
             }
+
             _engine = new GameOfLifeEngine((int)(height / cell_size),
                 (int)(width / cell_size),
                 new StandardLifeAndSurvivalRules(),
@@ -96,6 +97,11 @@ namespace Practice6_GameOfLife
 
                 _field.Children.Add(row);
             }
+        }
+
+        public async Task GetFieldFromFile(string filename)
+        {
+            await _engine.GetFieldFromFile(filename);
         }
 
         public async void PlayOrStopSimulation()
