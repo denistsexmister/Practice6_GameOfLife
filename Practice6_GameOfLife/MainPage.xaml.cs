@@ -27,10 +27,14 @@ namespace Practice6_GameOfLife
         {
             this.InitializeComponent();
 
-            ApplicationView appView = ApplicationView.GetForCurrentView();
-
-            appView.SetPreferredMinSize(new Size(800, 600));
-            appView.TryResizeView(new Size(800, 600));
+            Size windowSize = new Size(800, 600);
+            ApplicationView.PreferredLaunchViewSize = windowSize;
+            ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
+            ApplicationView.GetForCurrentView().TryResizeView(windowSize);
+            Window.Current.CoreWindow.SizeChanged += (s, e) =>
+            {
+                ApplicationView.GetForCurrentView().TryResizeView(windowSize);
+            };
         }
 
         private void play_button_Click(object sender, RoutedEventArgs e)
