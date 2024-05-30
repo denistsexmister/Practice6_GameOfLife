@@ -11,20 +11,25 @@ namespace Practice6_GameOfLife
 {
     internal class SaveManager
     {
-        private static string saveFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\gameoflife";
+        private static StorageFolder myDocs = KnownFolders.DocumentsLibrary;
 
         async public static void SaveFile(string fileName, string savedData)
         {
             if (fileName == null || fileName.Equals(""))
             {
-                fileName = "default" + DateTime.Now + ".txt";
+                fileName = "default" + DateTime.Now;
             }
+            fileName += ".txt";
 
-            if (!Directory.Exists(saveFolderPath))
+            StorageFolder savesFolder;
+            try
             {
-                Directory.CreateDirectory(saveFolderPath);
+                savesFolder = await myDocs.GetFolderAsync("gameoflife");
+            } 
+            catch (FileNotFoundException)
+            {
+                savesFolder = await myDocs.CreateFolderAsync("gameoflife");
             }
-            StorageFolder savesFolder = await StorageFolder.GetFolderFromPathAsync(saveFolderPath);
             StorageFile saveFile = await savesFolder.CreateFileAsync(fileName, CreationCollisionOption.GenerateUniqueName);
 
             await FileIO.WriteTextAsync(saveFile, savedData);
@@ -32,13 +37,24 @@ namespace Practice6_GameOfLife
 
         async public static Task<IReadOnlyList<StorageFile>> ReadFileNamesFromSavedFolder()
         {
-            if (Directory.Exists(saveFolderPath))
+            try
             {
-                StorageFolder savesFolder = await StorageFolder.GetFolderFromPathAsync(saveFolderPath);
+                StorageFolder savesFolder = await myDocs.GetFolderAsync("gameoflife");
                 IReadOnlyList<StorageFile> files = await savesFolder.GetFilesAsync();
                 return files;
+            } 
+            catch (FileNotFoundException)
+            {
+                return new List<StorageFile>();
             }
-            else { return new List<StorageFile>(); }
+        }
+
+        async public static Task<string> LoadSaveFromFile(string fileName)
+        {
+            StorageFolder savesFolder = await myDocs.GetFolderAsync("gameoflife");
+            StorageFile file = await savesFolder.GetFileAsync(fileName);
+
+            return  await FileIO.ReadTextAsync(file);
         }
     }
 }

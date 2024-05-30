@@ -5,7 +5,8 @@
   xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
   xmlns:iot="http://schemas.microsoft.com/appx/manifest/iot/windows10"
-  IgnorableNamespaces="uap mp iot">
+  xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+  IgnorableNamespaces="uap mp iot rescap">
 
   <Identity
     Name="2ec3378d-587e-4c84-a0be-35230dfce2b9"
@@ -55,5 +56,8 @@
 
   <Capabilities>
     <Capability Name="internetClient" />
+    <iot:Capability Name="systemManagement"/>
+	  <rescap:Capability Name="broadFileSystemAccess" />
+	  <rescap:Capability Name="documentsLibrary" />
   </Capabilities>
 </Package>
