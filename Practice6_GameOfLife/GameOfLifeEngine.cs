@@ -19,7 +19,6 @@ namespace Practice6_GameOfLife
         private readonly INeighborsCountingRules neighborsCountingRules;
 
         private bool[][] currentStep;
-        private bool[][] nextStep;
 
 
         public GameOfLifeEngine(int FIELD_HEIGHT, int FIELD_WIDTH,
@@ -33,15 +32,12 @@ namespace Practice6_GameOfLife
             this.neighborsCountingRules = neighborsCountingRules;
 
             currentStep = new bool[FIELD_HEIGHT][];
-            nextStep = new bool[FIELD_HEIGHT][];
             for (int i = 0; i < FIELD_HEIGHT; i++)
             {
                 currentStep[i] = new bool[FIELD_WIDTH];
-                nextStep[i] = new bool[FIELD_WIDTH];
                 for (int j = 0; j < FIELD_WIDTH; j++)
                 {
                     currentStep[i][j] = false;
-                    nextStep[i][j] = false;
                 }
             }
         }
@@ -69,8 +65,10 @@ namespace Practice6_GameOfLife
 
         public void MakeStepForward()
         {
+            bool[][] nextStep = new bool[FIELD_HEIGHT][];
             for (int i = 0; i < FIELD_HEIGHT; i++)
             {
+                nextStep[i] = new bool[FIELD_WIDTH];
                 for (int j = 0; j < FIELD_WIDTH; j++)
                 {
                     int liveNeighbors = CountLiveNeighborsOfCell(i, j);
